@@ -1,4 +1,6 @@
+import { EmailAlreadyExistsError } from '@/use-cases/errors/email-already-exists-error'
 import { makeCreateOrganizationUseCase } from '@/use-cases/factories/make-create-organization'
+import { hash } from 'bcryptjs'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -15,16 +17,26 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const { responsibleName, email, password, whatsAap, cep, street } =
     organizationSchema.parse(request.body)
 
+  const passwordHash = await hash(password, 6)
+
   const createOrganizationUseCase = makeCreateOrganizationUseCase()
 
-  await createOrganizationUseCase.execute({
-    responsible_name: responsibleName,
-    email,
-    password,
-    whatsAap,
-    cep,
-    street,
-  })
+  try {
+    await createOrganizationUseCase.execute({
+      responsible_name: responsibleName,
+      email,
+      password: passwordHash,
+      whatsAap,
+      cep,
+      street,
+    })
+  } catch (err) {
+    if (err instanceof EmailAlreadyExistsError) {
+      reply.status(409).send({ message: err.message })
+    }
+
+    throw err
+  }
 
   return reply.status(201).send()
 }

@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Pet{
   id String @id @default(uuid())
   name String
@@ -34,7 +33,7 @@ model Organization{
   password String
   cep String
   street String
-  whatsAap String
+  whatsApp String
   created_at    DateTime @default(now())
 
   Pet Pet[]

@@ -24,7 +24,7 @@ CREATE TABLE "organizations" (
     "password" TEXT NOT NULL,
     "cep" TEXT NOT NULL,
     "street" TEXT NOT NULL,
-    "whatsAap" TEXT NOT NULL,
+    "whatsApp" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "organizations_pkey" PRIMARY KEY ("id")
