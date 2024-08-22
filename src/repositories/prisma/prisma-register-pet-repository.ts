@@ -3,7 +3,7 @@ import { RegisterPetRepository } from '../register-pet-repository'
 import { prisma } from '@/utils/prisma'
 
 export class PrismaRegisterPetRepository implements RegisterPetRepository {
-  async create(data: Prisma.PetCreateInput) {
+  async create(data: Prisma.PetUncheckedCreateInput) {
     const pet = await prisma.pet.create({ data })
 
     return pet

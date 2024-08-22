@@ -2,7 +2,7 @@ import { Organization } from '@prisma/client'
 import { EmailAlreadyExistsError } from './errors/email-already-exists-error'
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 
-interface CreateOrganizationUseCaseRequest {
+interface OrganizationUseCaseRequest {
   responsible_name: string
   email: string
   password: string
@@ -11,7 +11,7 @@ interface CreateOrganizationUseCaseRequest {
   whatsApp: string
 }
 
-interface CreateOrganizationUseCaseResponse {
+interface OrganizationUseCaseResponse {
   organization: Organization
 }
 
@@ -25,7 +25,7 @@ export class CreateOrganizationUseCase {
     whatsApp,
     cep,
     street,
-  }: CreateOrganizationUseCaseRequest): Promise<CreateOrganizationUseCaseResponse> {
+  }: OrganizationUseCaseRequest): Promise<OrganizationUseCaseResponse> {
     const organizationAlreadyExists =
       await this.organizationsRepository.findByEmail(email)
 
