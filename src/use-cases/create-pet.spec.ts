@@ -1,18 +1,18 @@
 import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organizations-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryRegisterPet } from '@/repositories/in-memory/in-memory-register-pet'
-import { RegisterPetUseCase } from './register-pet'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { InMemoryPet } from '@/repositories/in-memory/in-memory-pet'
+import { PetUseCase } from './create-pet'
 
-let registerPetRepository: InMemoryRegisterPet
+let registerPetRepository: InMemoryPet
 let organizationRepository: InMemoryOrganizationRepository
-let sut: RegisterPetUseCase
+let sut: PetUseCase
 
 describe('Create organization use case', () => {
   beforeEach(() => {
     organizationRepository = new InMemoryOrganizationRepository()
-    registerPetRepository = new InMemoryRegisterPet()
-    sut = new RegisterPetUseCase(registerPetRepository, organizationRepository)
+    registerPetRepository = new InMemoryPet()
+    sut = new PetUseCase(registerPetRepository, organizationRepository)
   })
 
   it('should be able to register a new pet', async () => {

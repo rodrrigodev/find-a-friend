@@ -1,7 +1,7 @@
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
-import { RegisterPetRepository } from '@/repositories/register-pet-repository'
 import { Pet } from '@prisma/client'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { PetRepository } from '@/repositories/pet-repository'
 
 interface RegisterPetUseCaseRequest {
   organization_id: string
@@ -16,19 +16,17 @@ interface RegisterPetUseCaseRequest {
   requirements: string[] | []
 }
 
-interface RegisterPetUseCaseResponse {
+interface PetUseCaseResponse {
   pet: Pet
 }
 
-export class RegisterPetUseCase {
+export class PetUseCase {
   constructor(
-    private registerPetRepository: RegisterPetRepository,
+    private registerPetRepository: PetRepository,
     private organizationRepository: OrganizationsRepository,
   ) {}
 
-  async execute(
-    data: RegisterPetUseCaseRequest,
-  ): Promise<RegisterPetUseCaseResponse> {
+  async execute(data: RegisterPetUseCaseRequest): Promise<PetUseCaseResponse> {
     const organization = await this.organizationRepository.findById(
       data.organization_id,
     )

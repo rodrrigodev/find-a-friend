@@ -1,8 +1,8 @@
 import { Pet, Prisma } from '@prisma/client'
-import { RegisterPetRepository } from '../register-pet-repository'
 import { randomUUID } from 'crypto'
+import { PetFilters, PetRepository } from '../pet-repository'
 
-export class InMemoryRegisterPet implements RegisterPetRepository {
+export class InMemoryPet implements PetRepository {
   public items: Pet[] = []
 
   async create(data: Prisma.PetUncheckedCreateInput) {
@@ -24,5 +24,19 @@ export class InMemoryRegisterPet implements RegisterPetRepository {
     this.items.push(pet)
 
     return pet
+  }
+
+  async filterPet(filters: PetFilters) {
+    const { age, category, independence, energy, size } = filters
+
+    return this.items.filter((pet) => {
+      return (
+        (!age || pet.age === age) &&
+        (!category || pet.category === category) &&
+        (!independence || pet.independence === independence) &&
+        (!energy || pet.energy === energy) &&
+        (!size || pet.size === size)
+      )
+    })
   }
 }
