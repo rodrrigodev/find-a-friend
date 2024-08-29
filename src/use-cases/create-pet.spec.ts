@@ -11,7 +11,7 @@ let sut: PetUseCase
 describe('Create organization use case', () => {
   beforeEach(() => {
     organizationRepository = new InMemoryOrganizationRepository()
-    registerPetRepository = new InMemoryPet()
+    registerPetRepository = new InMemoryPet(organizationRepository)
     sut = new PetUseCase(registerPetRepository, organizationRepository)
   })
 
@@ -21,6 +21,7 @@ describe('Create organization use case', () => {
       password: '123456',
       responsible_name: 'Bruno',
       whatsApp: '12123456789',
+      state: 'São Paulo',
       cep: '11689896',
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
@@ -49,6 +50,7 @@ describe('Create organization use case', () => {
       responsible_name: 'Bruno',
       whatsApp: '12123456789',
       cep: '11689896',
+      state: 'São Paulo',
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 

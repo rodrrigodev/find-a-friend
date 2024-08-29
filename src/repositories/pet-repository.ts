@@ -6,9 +6,11 @@ export interface PetFilters {
   size?: string
   independence?: string
   category?: string
+  state: string
 }
 
 export interface PetRepository {
   create: (data: Prisma.PetUncheckedCreateInput) => Promise<Pet>
   filterPet: (filters: PetFilters) => Promise<Pet[] | null>
+  findPetById(id: string): Promise<Pet | null>
 }

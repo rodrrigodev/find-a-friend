@@ -19,6 +19,7 @@ describe('Create organization use case', () => {
       responsible_name: 'Bruno',
       whatsApp: '12123456789',
       cep: '11689896',
+      state: 'São Paulo',
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 
@@ -32,6 +33,7 @@ describe('Create organization use case', () => {
       responsible_name: 'Bruno',
       whatsApp: '12123456789',
       cep: '11689896',
+      state: 'São Paulo',
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 
@@ -47,6 +49,7 @@ describe('Create organization use case', () => {
       responsible_name: 'Bruno',
       whatsApp: '12123456789',
       cep: '11689896',
+      state: 'São Paulo',
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 
@@ -57,6 +60,7 @@ describe('Create organization use case', () => {
         responsible_name: 'Bruno',
         whatsApp: '12123456789',
         cep: '11689896',
+        state: 'São Paulo',
         street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
       }),
     ).rejects.toBeInstanceOf(EmailAlreadyExistsError)

@@ -1,9 +1,11 @@
 import { Organization, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
-import { OrganizationsRepository } from '../organizations-repository'
 import { hash } from 'bcryptjs'
+import { PrismaOrganizationRepository } from '../prisma/prisma-organization-repository'
 
-export class InMemoryOrganizationRepository implements OrganizationsRepository {
+export class InMemoryOrganizationRepository
+  implements PrismaOrganizationRepository
+{
   public items: Organization[] = []
 
   async findByEmail(email: string) {
@@ -20,11 +22,12 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
 
   async create(data: Prisma.OrganizationCreateInput) {
     const organization = {
-      id: randomUUID().toString(),
+      id: data.id || randomUUID().toString(),
       responsible_name: data.responsible_name,
       email: data.email,
       password: await hash(data.password, 6),
       cep: data.cep,
+      state: data.state,
       street: data.street,
       whatsApp: data.whatsApp,
       created_at: new Date(),
@@ -35,7 +38,7 @@ export class InMemoryOrganizationRepository implements OrganizationsRepository {
     return organization
   }
 
-  async findById(id: string) {
+  async findOrganizationById(id: string) {
     const organization = this.items.find((org) => {
       return org.id === id
     })

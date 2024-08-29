@@ -32,6 +32,7 @@ model Organization{
   email String @unique
   password String
   cep String
+  state String
   street String
   whatsApp String
   created_at    DateTime @default(now())

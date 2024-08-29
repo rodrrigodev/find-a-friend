@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client'
 import { prisma } from '@/utils/prisma'
-import { OrganizationsRepository } from '../organizations-repository'
+import { OrganizationRepository } from '../organization-repository'
 
-export class PrismaOrganizationsRepository implements OrganizationsRepository {
+export class PrismaOrganizationRepository implements OrganizationRepository {
   async create(data: Prisma.OrganizationCreateInput) {
     const organization = await prisma.organization.create({ data })
 
@@ -17,7 +17,7 @@ export class PrismaOrganizationsRepository implements OrganizationsRepository {
     return organizationExists
   }
 
-  async findById(id: string) {
+  async findOrganizationById(id: string) {
     const organization = await prisma.organization.findUnique({ where: { id } })
 
     return organization
