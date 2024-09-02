@@ -23,8 +23,27 @@ __export(prisma_exports, {
   prisma: () => prisma
 });
 module.exports = __toCommonJS(prisma_exports);
+
+// src/env/index.ts
+var import_config = require("dotenv/config");
+var import_zod = require("zod");
+var envSchema = import_zod.z.object({
+  PORT: import_zod.z.coerce.number().default(3333),
+  NODE_ENV: import_zod.z.enum(["development", "production", "test"]).default("production"),
+  JWT_SECRET: import_zod.z.string()
+});
+var _env = envSchema.safeParse(process.env);
+if (!_env.success) {
+  console.error("\u26A0\uFE0F Invalid environment variables!", _env.error?.format());
+  throw new Error("\u26A0\uFE0F Invalid environment variables!");
+}
+var env = _env.data;
+
+// src/utils/prisma.ts
 var import_client = require("@prisma/client");
-var prisma = new import_client.PrismaClient();
+var prisma = new import_client.PrismaClient({
+  log: env.NODE_ENV === "development" ? ["query"] : []
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   prisma

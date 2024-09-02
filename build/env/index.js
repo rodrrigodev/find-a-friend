@@ -27,7 +27,8 @@ var import_config = require("dotenv/config");
 var import_zod = require("zod");
 var envSchema = import_zod.z.object({
   PORT: import_zod.z.coerce.number().default(3333),
-  NODE_ENV: import_zod.z.enum(["development", "production", "test"]).default("production")
+  NODE_ENV: import_zod.z.enum(["development", "production", "test"]).default("production"),
+  JWT_SECRET: import_zod.z.string()
 });
 var _env = envSchema.safeParse(process.env);
 if (!_env.success) {

@@ -1,7 +1,7 @@
-import { OrganizationsRepository } from '@/repositories/organization-repository'
 import { Organization } from '@prisma/client'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { compare } from 'bcryptjs'
+import { OrganizationRepository } from '@/repositories/organization-repository'
 
 interface AuthenticateUseCaseRequest {
   email: string
@@ -13,7 +13,7 @@ interface AuthenticateUseCaseResponse {
 }
 
 export class AuthenticateUseCase {
-  constructor(private organizationRepository: OrganizationsRepository) {}
+  constructor(private organizationRepository: OrganizationRepository) {}
 
   async execute({
     email,

@@ -10,11 +10,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     email: z.string().email(),
     password: z.string().min(6),
     cep: z.string().min(8),
+    state: z.string().min(4),
     street: z.string(),
-    whatsAap: z.string().min(12),
+    whatsApp: z.string().min(12),
   })
 
-  const { responsibleName, email, password, whatsAap, cep, street } =
+  const { responsibleName, email, password, whatsApp, cep, street, state } =
     organizationSchema.parse(request.body)
 
   const passwordHash = await hash(password, 6)
@@ -26,7 +27,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       responsible_name: responsibleName,
       email,
       password: passwordHash,
-      whatsAap,
+      whatsApp,
+      state,
       cep,
       street,
     })

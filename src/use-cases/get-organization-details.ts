@@ -12,6 +12,6 @@ export class GetOrganizationDetailsUseCase {
       throw new OrganizationNotFoundError()
     }
 
-    return organization
+    return { organization }
   }
 }
