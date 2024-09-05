@@ -22,7 +22,7 @@ export async function authenticate(
       password,
     })
 
-    const token = reply.jwtSign({}, { sign: { sub: organization.id } })
+    const token = await reply.jwtSign({}, { sign: { sub: organization.id } })
 
     return reply.status(200).send({ token })
   } catch (err) {

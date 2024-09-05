@@ -1,11 +1,11 @@
 import { Pet, Prisma } from '@prisma/client'
 
 export interface PetFilters {
-  age?: string
-  energy?: string
-  size?: string
-  independence?: string
-  category?: string
+  age: string | null
+  energy: string | null
+  size: string | null
+  independence: string | null
+  category: string | null
   state: string
 }
 

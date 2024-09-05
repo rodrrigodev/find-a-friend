@@ -45,6 +45,8 @@ describe('Filter pet use case', () => {
       size: 'Pequeno',
       energy: 'Média',
       state: 'São Paulo',
+      age: null,
+      independence: null,
     })
 
     const [firstPet] = pet!
@@ -53,7 +55,7 @@ describe('Filter pet use case', () => {
     expect(firstPet.name).toBe('Luna')
   })
 
-  it('should be not able to filter pets', async () => {
+  it('should not be able to filter pets', async () => {
     await organizationRepository.create({
       id: 'org-1',
       email: 'pet-friend@email.com',
@@ -83,6 +85,9 @@ describe('Filter pet use case', () => {
         size: 'Médio',
         energy: 'Alta',
         state: 'Minas Gerais',
+        age: null,
+        category: null,
+        independence: null,
       }),
     ).rejects.toBeInstanceOf(PetsNotFoundError)
   })

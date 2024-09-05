@@ -23,7 +23,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const createOrganizationUseCase = makeCreateOrganizationUseCase()
 
   try {
-    await createOrganizationUseCase.execute({
+    const organization = await createOrganizationUseCase.execute({
       responsible_name: responsibleName,
       email,
       password: passwordHash,
@@ -32,6 +32,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       cep,
       street,
     })
+
+    return reply.status(201).send(organization)
   } catch (err) {
     if (err instanceof EmailAlreadyExistsError) {
       reply.status(409).send({ message: err.message })
@@ -39,6 +41,4 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
     throw err
   }
-
-  return reply.status(201).send()
 }

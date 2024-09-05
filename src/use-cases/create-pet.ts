@@ -3,7 +3,7 @@ import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { PetRepository } from '@/repositories/pet-repository'
 import { OrganizationRepository } from '@/repositories/organization-repository'
 
-interface RegisterPetUseCaseRequest {
+interface PetUseCaseRequest {
   organization_id: string
   name: string
   about: string | null
@@ -26,7 +26,7 @@ export class PetUseCase {
     private organizationRepository: OrganizationRepository,
   ) {}
 
-  async execute(data: RegisterPetUseCaseRequest): Promise<PetUseCaseResponse> {
+  async execute(data: PetUseCaseRequest): Promise<PetUseCaseResponse> {
     const organization = await this.organizationRepository.findOrganizationById(
       data.organization_id,
     )

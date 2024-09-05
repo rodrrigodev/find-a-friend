@@ -5,9 +5,10 @@ import { getOrganizationDetails } from './get-organization-details'
 import { authenticate } from './authenticate'
 
 export async function organizationRoutes(app: FastifyInstance) {
-  app.post('/organization', { onRequest: [verifyJWT] }, create)
+  // app.post('/organization', { onRequest: [verifyJWT] }, create)
+  app.post('/organization', create)
 
   app.post('/create-session', authenticate)
 
-  app.get('/organization-details', getOrganizationDetails)
+  app.get('/organization-details/:organizationId', getOrganizationDetails)
 }
