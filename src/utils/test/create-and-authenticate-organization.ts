@@ -1,12 +1,13 @@
 import { prisma } from '@/lib/prisma'
+import { hash } from 'bcryptjs'
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
 export async function createAndAuthenticateOrganization(app: FastifyInstance) {
-  await prisma.organization.create({
+  const organization = await prisma.organization.create({
     data: {
       email: 'pet-friend@email.com',
-      password: '123456',
+      password: await hash('123456', 6),
       responsible_name: 'Bruno',
       whatsApp: '121234567895',
       cep: '11689896',
@@ -20,10 +21,8 @@ export async function createAndAuthenticateOrganization(app: FastifyInstance) {
     password: '123456',
   })
 
-  // check if there is a token
-  console.log(authResponse.body)
-
   const { token } = authResponse.body
+  const { id } = organization
 
-  return { token }
+  return { token, id }
 }

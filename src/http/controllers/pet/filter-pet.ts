@@ -1,4 +1,4 @@
-import { PetsNotFoundError } from '@/use-cases/errors/pet-not-found-error'
+import { PetNotFoundError } from '@/use-cases/errors/pet-not-found-error'
 import { makeFilterPetUseCase } from '@/use-cases/factories/make-filter-pet'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -14,7 +14,7 @@ export async function filterPet(request: FastifyRequest, reply: FastifyReply) {
   })
 
   const { age, category, energy, independence, size, state } =
-    filterPetSchema.parse(request.body)
+    filterPetSchema.parse(request.query)
 
   const filterPet = makeFilterPetUseCase()
 
@@ -30,7 +30,8 @@ export async function filterPet(request: FastifyRequest, reply: FastifyReply) {
 
     return reply.status(200).send(pet)
   } catch (err) {
-    if (err instanceof PetsNotFoundError) {
+    if (err instanceof PetNotFoundError) {
+      console.log(err)
       reply.status(409).send({ message: err.message })
     }
   }

@@ -16,7 +16,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     requirements: z.array(z.string()),
   })
 
-  const organizationIdSchema = z.object({ id: z.string().uuid() })
+  const organizationIdSchema = z.object({ organizationId: z.string().uuid() })
 
   const {
     about,
@@ -30,7 +30,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
     size,
   } = petSchema.parse(request.body)
 
-  const { id } = organizationIdSchema.parse(request.params)
+  const { organizationId } = organizationIdSchema.parse(request.params)
 
   const createPet = makeCreatePetUseCase()
 
@@ -45,7 +45,7 @@ export async function createPet(request: FastifyRequest, reply: FastifyReply) {
       name,
       requirements,
       size,
-      organization_id: id,
+      organization_id: organizationId,
     })
 
     return reply.status(201).send(pet)
