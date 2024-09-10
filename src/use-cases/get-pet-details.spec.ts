@@ -24,7 +24,7 @@ describe('Get organization details use case', () => {
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 
-    const organization = await sut.execute('org-1')
+    const { organization } = await sut.execute('org-1')
 
     expect(organization?.responsible_name).toBe('Bruno')
     expect(organization?.id).toEqual(expect.any(String))

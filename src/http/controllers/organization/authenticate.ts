@@ -1,4 +1,4 @@
-import { EmailAlreadyExistsError } from '@/use-cases/errors/email-already-exists-error'
+import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
 import { makeAuthenticateUseCase } from '@/use-cases/factories/make-authenticate'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -23,11 +23,23 @@ export async function authenticate(
     })
 
     const token = await reply.jwtSign({}, { sign: { sub: organization.id } })
+    const refreshToken = await reply.jwtSign(
+      {},
+      { sign: { sub: organization.id, expiresIn: '7d' } },
+    )
 
-    return reply.status(200).send({ token })
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({ token })
   } catch (err) {
-    if (err instanceof EmailAlreadyExistsError) {
-      reply.status(409).send({ message: err.message })
+    if (err instanceof InvalidCredentialsError) {
+      reply.status(401).send({ message: err.message })
     }
 
     throw err

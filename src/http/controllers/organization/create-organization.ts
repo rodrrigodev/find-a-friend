@@ -21,7 +21,6 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
   const passwordHash = await hash(password, 6)
 
   const createOrganizationUseCase = makeCreateOrganizationUseCase()
-
   try {
     const organization = await createOrganizationUseCase.execute({
       responsible_name: responsibleName,

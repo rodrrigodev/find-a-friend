@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryPet } from '@/repositories/in-memory/in-memory-pet'
 import { FilterPetUseCase } from './filter-pet'
-import { PetsNotFoundError } from './errors/pet-not-found-error'
 import { InMemoryOrganizationRepository } from '@/repositories/in-memory/in-memory-organizations-repository'
+import { PetNotFoundError } from './errors/pet-not-found-error'
 
 let registerPetRepository: InMemoryPet
 let organizationRepository: InMemoryOrganizationRepository
@@ -33,20 +33,18 @@ describe('Filter pet use case', () => {
       about: 'Uma gata curiosa e carinhosa.',
       category: 'Gato',
       age: '2',
-      size: 'Pequeno',
-      energy: 'Média',
-      independence: 'Alta',
-      environment: 'Apartamento',
+      size: 'Small',
+      energy: 'Medium',
+      independence: 'Lot',
+      environment: 'Spacious',
       requirements: ['Brinquedos interativos', 'Arranhador'],
     })
 
     const pet = await sut.execute({
       category: 'Gato',
-      size: 'Pequeno',
-      energy: 'Média',
+      size: 'Small',
+      energy: 'Medium',
       state: 'São Paulo',
-      age: null,
-      independence: null,
     })
 
     const [firstPet] = pet!
@@ -73,22 +71,19 @@ describe('Filter pet use case', () => {
       about: 'Um cachorro amigável e energético.',
       category: 'Cachorro',
       age: '3',
-      size: 'Médio',
-      energy: 'Alta',
-      independence: 'Baixa',
-      environment: 'Casa com quintal',
+      size: 'Medium',
+      energy: 'Big',
+      independence: 'Little',
+      environment: 'Modular',
       requirements: ['Quintal cercado', 'Exercício diário'],
     })
 
     await expect(() =>
       sut.execute({
-        size: 'Médio',
-        energy: 'Alta',
+        size: 'Medium',
+        energy: '3',
         state: 'Minas Gerais',
-        age: null,
-        category: null,
-        independence: null,
       }),
-    ).rejects.toBeInstanceOf(PetsNotFoundError)
+    ).rejects.toBeInstanceOf(PetNotFoundError)
   })
 })

@@ -37,7 +37,6 @@ export class InMemoryPet implements PetRepository {
         return org.state === state
       },
     )
-    // console.log(this.organizationRepository.items)
 
     const filteredPets = this.items.filter((pet) => {
       const belongsToFilteredOrganization = filteredOrganizations.some(

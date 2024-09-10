@@ -24,10 +24,10 @@ describe('Get organization details use case', () => {
       street: 'Rua nova vida, 123, Campinas, São Paulo - SP',
     })
 
-    const organization = await sut.execute('org-1')
+    const { organization } = await sut.execute('org-1')
 
-    expect(organization?.responsible_name).toBe('Bruno')
-    expect(organization?.id).toEqual(expect.any(String))
+    expect(organization.responsible_name).toBe('Bruno')
+    expect(organization.id).toEqual(expect.any(String))
   })
 
   it('should not be able to get organization details', async () => {

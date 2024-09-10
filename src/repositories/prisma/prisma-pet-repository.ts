@@ -12,17 +12,15 @@ export class PrismaPetRepository implements PetRepository {
   async filterPet(petFilters: PetFilters) {
     const { age, category, energy, independence, size, state } = petFilters
 
-    const filters = {
-      ...(age && { age }),
-      ...(category && { category }),
-      ...(energy && { energy }),
-      ...(independence && { independence }),
-      ...(size && { size }),
-      AND: { organization: { state } },
-    }
-
     const pets = await prisma.pet.findMany({
-      where: filters,
+      where: {
+        age,
+        category,
+        energy,
+        independence,
+        size,
+        AND: { organization: { state } },
+      },
     })
 
     return pets

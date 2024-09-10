@@ -5,11 +5,11 @@ import { z } from 'zod'
 
 export async function filterPet(request: FastifyRequest, reply: FastifyReply) {
   const filterPetSchema = z.object({
-    age: z.string().nullable(),
-    energy: z.string().nullable(),
-    size: z.string().nullable(),
-    independence: z.string().nullable(),
-    category: z.string().nullable(),
+    age: z.string().optional(),
+    energy: z.string().optional(),
+    size: z.string().optional(),
+    independence: z.string().optional(),
+    category: z.string().optional(),
     state: z.string(),
   })
 
@@ -31,7 +31,6 @@ export async function filterPet(request: FastifyRequest, reply: FastifyReply) {
     return reply.status(200).send(pet)
   } catch (err) {
     if (err instanceof PetNotFoundError) {
-      console.log(err)
       reply.status(409).send({ message: err.message })
     }
   }

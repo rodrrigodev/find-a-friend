@@ -1,6 +1,6 @@
 import { PetRepository } from '@/repositories/pet-repository'
 import { PetFilters } from '../repositories/pet-repository'
-import { PetsNotFoundError } from './errors/pet-not-found-error'
+import { PetNotFoundError } from './errors/pet-not-found-error'
 
 export class FilterPetUseCase {
   constructor(private petRepository: PetRepository) {}
@@ -23,7 +23,7 @@ export class FilterPetUseCase {
     })
 
     if (pets?.length === 0) {
-      throw new PetsNotFoundError()
+      throw new PetNotFoundError()
     }
     return pets
   }

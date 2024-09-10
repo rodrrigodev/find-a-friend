@@ -1,7 +1,7 @@
 import request from 'supertest'
 
 import { app } from '@/app'
-import { afterAll, beforeAll, describe, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateOrganization } from '@/utils/test/create-and-authenticate-organization'
 
 describe('Filter pets e2e test', () => {
@@ -22,7 +22,7 @@ describe('Filter pets e2e test', () => {
         age: '3',
         size: 'Medium',
         energy: '1',
-        independence: 'Baixa',
+        independence: 'Little',
         environment: 'Modular',
         requirements: ['Quintal cercado', 'Exercício diário'],
       })
@@ -32,15 +32,14 @@ describe('Filter pets e2e test', () => {
       .query({
         size: 'Medium',
         energy: '1',
-        state: null,
+        state: 'São Paulo',
         age: null,
         category: null,
         independence: null,
       })
       .send()
 
-    console.log(pet.body, 123)
-
-    // expect(pet.status).toEqual(201)
+    expect(pet.status).toEqual(200)
+    expect(pet.body).toHaveLength(1)
   })
 })
