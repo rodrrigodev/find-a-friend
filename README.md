@@ -16,3 +16,6 @@
 - **Registering an Organization (ONG)**: new organizations can register to create an account and start listing pets for adoption.
 
 - **Organization Login**: registered ONGs can log in to access and manage pet listings as administrators.
+
+
+<p>The Find a Friend API is built with a modular architecture using Controllers, Repositories, Use Cases, and Domain-Driven Design (DDD) principles. Controllers handle user requests, repositories manage data access, and use cases encapsulate business logic for key actions. DDD principles guide the structure, focusing on core domains to ensure a clear, scalable, and maintainable system.</p>
